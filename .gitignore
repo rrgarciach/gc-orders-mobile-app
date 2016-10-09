@@ -7,3 +7,6 @@ plugins/
 
 # WebStorm stuff
 .idea/
+
+# Babel transpiled scripts
+www/js/

@@ -1,3 +1,4 @@
+import del from 'del';
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
@@ -7,17 +8,25 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 import inject from 'gulp-inject';
+import babel from 'gulp-babel';
 import _ from 'lodash';
 
+const srcPath = './src';
+const distPath = './www/js';
 const paths = {
   sass: ['./scss/**/*.scss'],
   css: ['./www/assets/css/*.min.css'],
-  javascript: ['./www/app/**/*.js']
+  scripts: {
+    src: [`${srcPath}/**/*.js`],
+    dist: [`${distPath}/**/*.js`]
+  }
 };
 
-gulp.task('default', ['injector', 'sass']);
+gulp.task('default', ['injector']);
 
-gulp.task('sass', done => {
+gulp.task('clean:dist', () => del([`${distPath}/**/*`]));
+
+gulp.task('sass', ['babel'], done => {
   gulp.src('./scss/ionic.app.scss')
     .pipe(sass())
     .on('error', sass.logError)
@@ -31,17 +40,17 @@ gulp.task('sass', done => {
 });
 
 gulp.task('watch', () => {
-  gulp.watch(paths.sass, ['injector', 'sass']);
+  gulp.watch(_.union(paths.scripts.src, paths.css), ['default']);
 });
 
-gulp.task('install', ['git-check'], function() {
+gulp.task('install', ['git-check'], () => {
   return bower.commands.install()
     .on('log', function(data) {
       gutil.log('bower', gutil.colors.cyan(data.id), data.message);
     });
 });
 
-gulp.task('git-check', function(done) {
+gulp.task('git-check', done => {
   if (!sh.which('git')) {
     console.log(
       '  ' + gutil.colors.red('Git is not installed.'),
@@ -54,8 +63,16 @@ gulp.task('git-check', function(done) {
   done();
 });
 
-gulp.task('injector', function() {
+gulp.task('injector', ['sass'], () => {
   return gulp.src('./www/index.html')
-    .pipe(inject(gulp.src(_.union(paths.javascript, paths.css), {read: false}), {relative: true}))
+    .pipe(inject(gulp.src(paths.scripts.dist, {read: false}), {relative: true}))
     .pipe(gulp.dest('./www'))
+});
+
+gulp.task('babel', ['clean:dist'], () => {
+  return gulp.src(_.union(paths.scripts.src))
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(gulp.dest('./www/js'));
 });
