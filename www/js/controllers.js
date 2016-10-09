@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('app.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $http) {
 
@@ -31,10 +31,11 @@ angular.module('starter.controllers', [])
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
+    console.log('Doing login', JSON.stringify($scope.loginData));
 
-    $http.post('https://gc-orders-testing.herokuapp.com/api/v1/auth', $scope.loginData)
-      .then(function () {
+    $http.post('https://gc-orders-development.herokuapp.com/api/v1/auth', $scope.loginData)
+      .then(function (response) {
+        console.log('token', JSON.stringify(response.data));
         $scope.closeLogin();
       });
   };
