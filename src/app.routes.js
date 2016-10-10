@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('app')
-  .config(($stateProvider, $urlRouterProvider) => {
+  .config(($stateProvider, $urlRouterProvider, $translateProvider) => {
     $stateProvider
       .state('app', {
         url: '/app',
@@ -13,6 +13,9 @@ angular.module('app')
         templateUrl: 'templates/menu.html',
         controller: 'AppCtrl'
       });
+
+    $translateProvider.preferredLanguage('es');
+    $translateProvider.fallbackLanguage('es');
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/login');
