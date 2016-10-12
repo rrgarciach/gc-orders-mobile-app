@@ -2,19 +2,18 @@
 
 export default class LoginCtrl {
 
-  constructor($ionicSideMenuDelegate, $http, sessionService) {
+  constructor($ionicSideMenuDelegate, $state, authService) {
     $ionicSideMenuDelegate.canDragContent(false);
-    this.$http = $http;
-    this.sessionService = sessionService;
+    this.state = $state;
+    this.authService = authService;
     // Form data for the login modal
     this.loginData = {};
   }
 
   doLogin() {
-    this.$http.post('https://gc-orders-development.herokuapp.com/api/v1/auth', this.loginData)
-      .then(response => {
-        this.sessionService.setSessionToken(response.data.token);
-        console.log('token', JSON.stringify( this.sessionService.getSessionToken() ));
+    this.authService.login(this.loginData)
+      .then(() => {
+        this.state.go('app.orders');
       });
   }
 
