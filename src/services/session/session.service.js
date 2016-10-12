@@ -6,6 +6,7 @@ export default function sessionService() {
   return {
     setToken,
     getToken,
+    destroy
   };
 
   function setToken(token) {
@@ -14,6 +15,10 @@ export default function sessionService() {
 
   function getToken() {
     return session.token;
+  }
+
+  function destroy() {
+    session = {};
   }
 
 }

@@ -3,15 +3,21 @@
 export default function authService(apiService) {
 
   return {
-    login
+    login,
+    logout
   };
 
   function login(loginData) {
     return apiService.post('/api/v1/auth', loginData)
       .then(response => {
-        this.sessionService.setSessionToken(response.data.token);
-        console.log('token', JSON.stringify( this.sessionService.getSessionToken() ));
+        this.sessionService.setToken(response.data.token);
+        console.log('token', JSON.stringify( this.sessionService.getToken() ));
       });
+  }
+
+  function logout() {
+      this.sessionService.destroy();
+      console.log('token', JSON.stringify( this.sessionService.getToken() ));
   }
 
 }
