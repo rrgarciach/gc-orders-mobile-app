@@ -1,6 +1,6 @@
 'use strict';
 
-class LoginCtrl {
+export default class LoginCtrl {
 
   constructor($ionicSideMenuDelegate, $http, sessionService) {
     $ionicSideMenuDelegate.canDragContent(false);
@@ -19,5 +19,3 @@ class LoginCtrl {
   }
 
 }
-angular.module('app.gc-orders')
-  .controller('LoginCtrl', LoginCtrl);
