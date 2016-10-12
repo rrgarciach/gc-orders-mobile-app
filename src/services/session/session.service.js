@@ -1,21 +1,18 @@
 'use strict';
 
-angular.module('app.services')
-  .service('sessionService', sessionService);
-
-function sessionService() {
+export default function sessionService() {
   let session = {};
 
   return {
-    setSessionToken,
-    getSessionToken,
+    setToken,
+    getToken,
   };
 
-  function setSessionToken(token) {
-    session.token = token;
+  function setToken(token) {
+    session.token = `Bearer ${token}`;
   }
 
-  function getSessionToken() {
+  function getToken() {
     return session.token;
   }
 
