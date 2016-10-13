@@ -1,6 +1,6 @@
 'use strict';
 
-export default function routes($stateProvider, $urlRouterProvider) {
+export default function routes($stateProvider) {
 
   $stateProvider
     .state('app.orders', {

@@ -1,6 +1,7 @@
 'use strict';
 
 export default function sessionService() {
+  
   let session = {};
 
   return {
