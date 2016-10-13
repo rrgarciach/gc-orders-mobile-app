@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('app.gc-orders')
-  .config(($stateProvider, $urlRouterProvider) => {
+export default function routes($stateProvider, $urlRouterProvider) {
 
     $stateProvider
       .state('app.login', {
@@ -16,4 +15,4 @@ angular.module('app.gc-orders')
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/login');
-  });
+  };
