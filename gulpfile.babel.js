@@ -51,7 +51,7 @@ gulp.task('git-check', done => {
 
 gulp.task('default', ['injector']);
 
-gulp.task('injector', ['sass'], () => {
+gulp.task('injector', ['script'], () => {
   return gulp.src('./www/index.html')
     .pipe(inject(gulp.src(paths.scripts.dist, {read: false}), {relative: true}))
     .pipe(gulp.dest('./www'))
@@ -99,4 +99,24 @@ gulp.task('test', ['babel'], () => {
 
 gulp.task('test:watch', () => {
   return gulp.watch([`${srcPath}/**/**.js`], ['test']);
+});
+
+
+var babelify = require('babelify');
+var browserify = require('browserify');
+var vinylSourceStream = require('vinyl-source-stream');
+var vinylBuffer = require('vinyl-buffer');
+
+gulp.task('script', ['clean:dist'], () => {
+  var sources = browserify({
+    entries: 'src/app.module.js',
+    // debug: true
+  })
+    .transform(babelify.configure());
+
+  return sources.bundle()
+    .pipe(vinylSourceStream('app.min.js'))
+    .pipe(vinylBuffer())
+    // Do stuff to the output file
+    .pipe(gulp.dest('www/js/'))
 });
