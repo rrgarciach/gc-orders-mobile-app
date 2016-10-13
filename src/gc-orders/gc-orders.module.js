@@ -1,8 +1,12 @@
 'use strict';
 
-import LoginCtrl from './login/login.controller';
-import routes from './login/login.routes';
+import routes from './gc-orders.routes';
 
-export default angular.module('app.gc-orders', [])
+import LoginCtrl from './login/login.controller';
+import loginTranslate from './login/login.translate';
+
+export default angular.module('gc-orders', [])
+  .config(routes)
   .controller('LoginCtrl', LoginCtrl)
-  .config(routes).name;
+  .config(loginTranslate)
+  .name;
