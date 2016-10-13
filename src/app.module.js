@@ -1,6 +1,6 @@
 'use strict';
-
-import angular from 'angular';
+// next lines is commented due that Ionic is already loading angular. Will fix later.
+// import angular from 'angular';
 import gcOrdersModule from './gc-orders/gc-orders.module';
 import servicesModule from './services/services.module';
 
