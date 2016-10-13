@@ -4,13 +4,13 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-export default function routes($stateProvider, $urlRouterProvider, $translateProvider) => {
+export default function routes($stateProvider, $urlRouterProvider, $translateProvider) {
   $stateProvider
     .state('app', {
       url: '/app',
       abstract: true,
       templateUrl: 'templates/menu.html',
-      controller: 'AppCtrl'
+      controller: 'MenuCtrl'
     });
 
   $translateProvider.preferredLanguage('es');
